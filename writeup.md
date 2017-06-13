@@ -19,7 +19,7 @@ The goals / steps of this project are the following:
 [image6]: ./examples/output_bboxes.png
 [image7]: ./examples/output_bboxes_and_heatmap1.png
 [image8]: ./examples/output_bboxes_and_heatmap2.png
-[video1]: ./project_video.mp4
+[video1]: ./project_video_output.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -99,6 +99,10 @@ Here's an example result showing the heatmap for the test images and the compute
 
 ### Smoothing the bounding boxes across frames 
 I created a Tracker class that tracks the heatmaps of cars across frames. The code for the Tracker class and how its called from the pipeline are in cells 36 - 38. To smooth the frames, we aggregate the heatmaps of images across n frames. On the nth frame we will use the heatmap threshold and `scipy.ndimage.measurements.label()` to compute the new label which is stored in the last_label attribute in the class. We then reset the agg_hashmap for the next n-frame aggregation. For the next n frames the bounding boxes are drawn from the last_label value while the agg_hashmap accumulates the heat map. In this way we smooth the bounding boxes across frames. This also cuts down false positives as most false positives do not carry over across frames. So when aggregating across frames these false positives will have lower heatmap values and would get trimmed out by the threshold.
+
+### Project Output Video
+
+![alt text][video1]
 
 ---
 
